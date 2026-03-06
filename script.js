@@ -5,7 +5,7 @@ var ckTimeOut = 600; // 10 seconds (var is in game ticks)
 var throwinDistance = 270; // distance players can move the ball during throw in
 var mapBGColor = "86A578"; // default 718C5A
 var superAdminCode = "142"; // !admin 142
-var allowPublicAdmin = true; // if true then !admin command is enabled
+var allowPublicAdmin = false; // if true then !admin command is enabled
 var powerShotMode = true;
 
 
@@ -27,7 +27,7 @@ var roomPublic = true;
 var playerName = "";
 var token = "thr1.AAAAAGPZLzF99oHRkbRqiA.dVk2jIrJK7U";
 var roomLink = "";
-var gameTime = 10; //default game time if 0 is selected
+var gameTime = 5; //default game time if 0 is selected
 var map = "RSR";
 var superAdmins = [];
 var roomPassword = null;
@@ -43,6 +43,7 @@ geo: { code: "br", lat: -30.0346, lon: -51.2177 },
 	playerName: "",
 	token: token
 });
+
 
 
 // -------------------------------------------------
@@ -101,6 +102,7 @@ class Game {
 room.setCustomStadium(getRealSoccerMap());
 room.setScoreLimit(3);
 room.setTimeLimit(5);
+room.setTeamLock: true
 
 room.onRoomLink = function(url) {
 	roomLink = url;
@@ -724,7 +726,7 @@ function realSoccerRef() {
 					game.outStatus = "blueGK";
 					game.rsTimer = 0;
 					game.rsReady = true;
-					//announce("🥅 Goal Kick: 🔵 Blue");
+					//announce("🥅 : 🔵 Blue");
 					game.rsGoalKick = true;
 					game.rsSwingTimer = 0;
 					game.boosterCount = 0;
@@ -736,7 +738,7 @@ function realSoccerRef() {
 				});
 			}
 			else {	
-				//announce("🚩 Corner Kick: 🔴 Red");							
+				//announce("🚩 Lateral: 🔴 Red");							
 				game.rsSwingTimer = 0;
 				if (room.getBallPosition().y < -124) {					
 					room.setDiscProperties(3, {x: 1140, y: -590, radius: 18 });
@@ -879,7 +881,7 @@ function handleBallTouch() {
 			game.powershotid = 0;
 			if (parseFloat(room.getDiscProperties(0).invMass.toFixed(2)) != 1.05) {
 				room.setDiscProperties(0, {invMass: 1.05});
-				room.sendAnnouncement("POWERSHOT CANCELLED!", game.powershotID, 0xdd3333, "bold", 2);
+				room.sendAnnouncement("POWERSHOT CANCELADO!", game.powershotID, 0xdd3333, "bold", 2);
 			}
 		}
 		//=========== POWERSHOT CODE ===========
@@ -929,11 +931,6 @@ function isAdminPresent() {
 	}
 	else {
 		return false;
-	}
-}
-
-function displayAdminMessage() {
-	if (isAdminPresent() == false && allowPublicAdmin == false ("");
 	}
 }
 
