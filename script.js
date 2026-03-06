@@ -102,7 +102,7 @@ class Game {
 room.setCustomStadium(getRealSoccerMap());
 room.setScoreLimit(3);
 room.setTimeLimit(5);
-room.setTeamsLock: (true);
+room.setTeamsLock(true);
 
 room.onRoomLink = function(url) {
 	roomLink = url;
