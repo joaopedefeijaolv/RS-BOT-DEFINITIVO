@@ -684,7 +684,7 @@ function realSoccerRef() {
 					game.rsTimer = 0;
 					game.rsReady = true;
 					room.setDiscProperties(0, {xspeed: 0, yspeed: 0, x: game.ballOutPositionX, y: game.throwInPosY, xgravity: 0, ygravity: 0});
-					announce("🖐️ Lateral: 🔵 Blue");
+					announce("Lateral 🔵");
 					room.setDiscProperties(0, {color: "0x0fbcf9"});				
 				});	
 				sleep(100).then(() => {
@@ -699,7 +699,7 @@ function realSoccerRef() {
 					game.rsTimer = 0;
 					game.rsReady = true;
 					room.setDiscProperties(0, {xspeed: 0, yspeed: 0, x: game.ballOutPositionX, y: game.throwInPosY, xgravity: 0, ygravity: 0});
-					announce("🖐️ Lateral: 🔴 Red");
+					announce("Lateral 🔴");
 					room.setDiscProperties(0, {color: "0xff3f34"});				
 				});	
 				sleep(100).then(() => {
@@ -726,7 +726,7 @@ function realSoccerRef() {
 					game.outStatus = "blueGK";
 					game.rsTimer = 0;
 					game.rsReady = true;
-					announce("🥅 Tiro de meta: 🔵 Blue");
+					announce("Tiro de meta 🔵");
 					game.rsGoalKick = true;
 					game.rsSwingTimer = 0;
 					game.boosterCount = 0;
@@ -738,7 +738,7 @@ function realSoccerRef() {
 				});
 			}
 			else {	
-				announce("🚩 Escanteio: 🔴 Red");							
+				announce("Escanteio 🔴");							
 				game.rsSwingTimer = 0;
 				if (room.getBallPosition().y < -124) {					
 					room.setDiscProperties(3, {x: 1140, y: -590, radius: 18 });
@@ -783,7 +783,7 @@ function realSoccerRef() {
 			});
 			
 			if (game.rsTouchTeam == 1) {				
-				announce("🚩 Escanteio: 🔵 Blue");				
+				announce("Escanteio 🔵");				
 				game.rsSwingTimer = 0;
 				if (room.getBallPosition().y < -124) {
 					room.setDiscProperties(3, {x: -1140, y: -590, radius: 18 });
@@ -820,7 +820,7 @@ function realSoccerRef() {
 					game.outStatus = "redGK";
 					game.rsTimer = 0;
 					game.rsReady = true;
-					announce("🥅 Tiro de meta: 🔴 Red");
+					announce("Tiro de meta 🔴");
 					game.rsGoalKick = true;
 					game.rsSwingTimer = 0;
 					game.boosterCount = 0;
@@ -862,7 +862,7 @@ function handleBallTouch() {
 					//room.sendAnnouncement("Powershot counter: " + game.powershotCounter, null, 0x333333, "small-bold", 0);
 					if (game.powershotCounter > 100 && game.powershotTrigger == false && Math.round(room.getDiscProperties(0).invMass) != 2) {
 						room.setDiscProperties(0, {invMass: 2});
-						room.sendAnnouncement("POWERSHOT!", game.powershotID, 0x33dd33, "bold", 1);
+						room.sendAnnouncement("CHUTÃO!", game.powershotID, 0x33dd33, "bold", 1);
 						game.powershotTrigger = true;
 					}
 				}
