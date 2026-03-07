@@ -361,7 +361,7 @@ room.onPlayerChat = function(player, message) {
 			room.startGame();
 		}
 		else if (args[0] == "bb") {
-			room.kickPlayer(player.id, "Até logo!", false);
+			room.kickPlayer(player.id, "Entre no nosso discord: https://discord.gg/vdjDcUfPNZ", false);
 		}	
 		else if ((args[0] == "powershot" || args[0] == "ps") && player.admin) {
 			if (powerShotMode == false) {
@@ -684,7 +684,7 @@ function realSoccerRef() {
 					game.rsTimer = 0;
 					game.rsReady = true;
 					room.setDiscProperties(0, {xspeed: 0, yspeed: 0, x: game.ballOutPositionX, y: game.throwInPosY, xgravity: 0, ygravity: 0});
-					//announce("🖐️ Lateral: 🔵 Blue");
+					announce("🖐️ Lateral: 🔵 Blue");
 					room.setDiscProperties(0, {color: "0x0fbcf9"});				
 				});	
 				sleep(100).then(() => {
@@ -699,7 +699,7 @@ function realSoccerRef() {
 					game.rsTimer = 0;
 					game.rsReady = true;
 					room.setDiscProperties(0, {xspeed: 0, yspeed: 0, x: game.ballOutPositionX, y: game.throwInPosY, xgravity: 0, ygravity: 0});
-					//announce("🖐️ Lateral: 🔴 Red");
+					announce("🖐️ Lateral: 🔴 Red");
 					room.setDiscProperties(0, {color: "0xff3f34"});				
 				});	
 				sleep(100).then(() => {
@@ -726,7 +726,7 @@ function realSoccerRef() {
 					game.outStatus = "blueGK";
 					game.rsTimer = 0;
 					game.rsReady = true;
-					//announce("🥅 : 🔵 Blue");
+					announce("🥅 Tiro de meta: 🔵 Blue");
 					game.rsGoalKick = true;
 					game.rsSwingTimer = 0;
 					game.boosterCount = 0;
@@ -738,7 +738,7 @@ function realSoccerRef() {
 				});
 			}
 			else {	
-				//announce("🚩 Lateral: 🔴 Red");							
+				announce("🚩 Escanteio: 🔴 Red");							
 				game.rsSwingTimer = 0;
 				if (room.getBallPosition().y < -124) {					
 					room.setDiscProperties(3, {x: 1140, y: -590, radius: 18 });
@@ -783,7 +783,7 @@ function realSoccerRef() {
 			});
 			
 			if (game.rsTouchTeam == 1) {				
-				//announce("🚩 Corner Kick: 🔵 Blue");				
+				announce("🚩 Escanteio: 🔵 Blue");				
 				game.rsSwingTimer = 0;
 				if (room.getBallPosition().y < -124) {
 					room.setDiscProperties(3, {x: -1140, y: -590, radius: 18 });
@@ -820,7 +820,7 @@ function realSoccerRef() {
 					game.outStatus = "redGK";
 					game.rsTimer = 0;
 					game.rsReady = true;
-					//announce("🥅 Goal Kick: 🔴 Red");
+					announce("🥅 Tiro de meta: 🔴 Red");
 					game.rsGoalKick = true;
 					game.rsSwingTimer = 0;
 					game.boosterCount = 0;
