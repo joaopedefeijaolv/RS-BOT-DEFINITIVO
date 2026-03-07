@@ -1232,8 +1232,117 @@ function removeBlock() {
 		}		
 	}
             }
+//teste 
+// ==========================
+// CONFIGURAÇÕES INICIAIS
+// ==========================
+const users = {}; // Armazena stats e elo de cada jogador
 
-    //teste (qlqr coisa apaga)
+// ELOS
+const ELO_RANKS = [
+  { emoji: "🟤", name: "Noob", min: 0, max: 100 },
+  { emoji: "⚪️", name: "Intermediario", min: 100, max: 200 },
+  { emoji: "🟡", name: "Profissional", min: 200, max: 300 },
+  { emoji: "🟠", name: "Lendario +", min: 300, max: 400 },
+  { emoji: "🔴", name: "Lendario ++", min: 400, max: 500 },
+  { emoji: "🌎", name: "Lendario +++", min: 500, max: 600 },
+  { emoji: "🌐", name: "Mestre", min: 600, max: Infinity },
+];
+
+// STAFF
+const STAFF_CODES = {
+  "#cachorrochupetao21": { role: "Dono", tag: "[👑][🌐][Mundial]" },
+  "#gerenteH1939": { role: "Gerente", tag: "[⭐️]" },
+  "#adminH1945": { role: "Admin", tag: "[👔]" },
+  "#moderadorH1504": { role: "Mod", tag: "[🦺]" },
+};
+
+// ==========================
+// FUNÇÕES AUXILIARES
+// ==========================
+function getEloRank(elo) {
+  return ELO_RANKS.find(r => elo >= r.min && elo < r.max);
+}
+
+function getStaffCodeByRole(role) {
+  return Object.keys(STAFF_CODES).find(code => STAFF_CODES[code].role === role);
+}
+
+// Retorna o nome com tag + elo + rank
+function getDisplayName(user) {
+  if (user.role === "Dono") return `${STAFF_CODES["#cachorrochupetao21"].tag} ${user.username}: ${user.elo}`;
+  
+  const tag = user.role && user.role !== "Player" ? STAFF_CODES[getStaffCodeByRole(user.role)].tag
+             : user.vip ? "[💎]"
+             : "[🏃]";
+  const rank = getEloRank(user.elo);
+  return `${tag}[${rank.emoji}][${rank.name}] ${user.username}: ${user.elo}`;
+}
+
+// ==========================
+// COMANDOS
+// ==========================
+
+// Cria ou atualiza stats (qualquer jogador novo entra automaticamente)
+function updateStats(username, { gols = 0, assist = 0, cs = 0, vitoria = 0, derrota = 0 } = {}) {
+  if (!users[username]) {
+    users[username] = { username, gols:0, assist:0, cs:0, vitoria:0, derrota:0, elo:0, vip:false, role:"Player" };
+  }
+  const user = users[username];
+  user.gols += gols;
+  user.assist += assist;
+  user.cs += cs;
+  user.vitoria += vitoria;
+  user.derrota += derrota;
+
+  // Calcula elo
+  user.elo += (cs * 3) + (vitoria * 3) + (gols * 2) + (assist * 1) - (derrota * 3);
+}
+
+// Mostrar stats (com cor verde no console)
+function showStats(username) {
+  const user = users[username];
+  if (!user) return `❌ Usuário ${username} não encontrado`;
+
+  const green = "\x1b[32m"; // verde console
+  const reset = "\x1b[0m";  // reset
+  return `
+${green}📊 ${username} Stats:${reset}
+${green}Jogos:${reset} ${user.vitoria + user.derrota}   ${green}Vitorias:${reset} ${user.vitoria}   ${green}Derrotas:${reset} ${user.derrota}
+${green}Gols:${reset} ${user.gols}   ${green}Assistencias:${reset} ${user.assist}
+${green}CS:${reset} ${user.cs}
+${green}Elo:${reset} ${user.elo} (${getEloRank(user.elo).emoji} ${getEloRank(user.elo).name})
+`.trim();
+}
+
+// Mostrar ranking geral
+function showRank() {
+  return Object.values(users)
+    .sort((a,b) => b.elo - a.elo)
+    .map(u => getDisplayName(u))
+    .join("\n");
+}
+
+// Dar VIP
+function giveVip(username) {
+  if (!users[username]) users[username] = { username, gols:0, assist:0, cs:0, vitoria:0, derrota:0, elo:0, vip:false, role:"Player" };
+  users[username].vip = true;
+}
+
+// Dar staff via código
+function checkStaff(code, username) {
+  const staff = STAFF_CODES[code];
+  if (!staff) return "Código inválido!";
+  if (!users[username]) users[username] = { username, gols:0, assist:0, cs:0, vitoria:0, derrota:0, elo:0, vip:false, role:"Player" };
+  users[username].role = staff.role;
+  return `${username} agora é ${staff.role} com tag ${staff.tag}`;
+}
+
+// Ranking geral
+console.log("\n🏆 Ranking Geral:");
+console.log(showRank());
+
+    //fim
 
 var maxTeamSize = 5;
 
